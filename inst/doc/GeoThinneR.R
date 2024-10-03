@@ -122,18 +122,6 @@ thin_sim_data <- thin_points(
 ))
 nrow(thin_sim_data[[1]])
 
-## ----eval = FALSE-------------------------------------------------------------
-#  system.time(
-#  thin_sim_data <- thin_points(
-#    data = sim_data,
-#    method = "r_tree",
-#    thin_dist = 20,
-#    trials = 50,
-#    all_trials = FALSE,
-#    seed = 123
-#  ))
-#  nrow(thin_sim_data[[1]])
-
 ## -----------------------------------------------------------------------------
 system.time(
 thin_sim_data <- thin_points(
