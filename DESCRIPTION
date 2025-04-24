@@ -1,7 +1,7 @@
 Type: Package
 Package: GeoThinneR
-Title: Simple Spatial Thinning for Ecological and Spatial Analysis
-Version: 1.1.0
+Title: Efficient Spatial Thinning of Species Occurrences
+Version: 2.0.0
 Authors@R: 
     person("Jorge", "Mestre-Tomás", , "jorge.mestre.tomas@csic.es", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-8983-3417"))
@@ -16,9 +16,9 @@ URL: https://github.com/jmestret/GeoThinneR,
         https://jmestret.github.io/GeoThinneR/
 BugReports: https://github.com/jmestret/GeoThinneR/issues
 Depends: R (>= 4.0.0)
-Imports: data.table, fields, matrixStats, nabor, Rcpp, stats, terra
-Suggests: ggplot2, knitr, rmarkdown, sf, testthat (>= 3.0.0), tibble
-LinkingTo: Rcpp
+Imports: data.table, doParallel, fields, foreach, graphics, grDevices,
+        matrixStats, nabor, sf, stats, terra
+Suggests: ggplot2, knitr, rmarkdown, testthat (>= 3.0.0), tibble
 VignetteBuilder: knitr
 BuildVignettes: true
 Config/testthat/edition: 3
@@ -26,9 +26,9 @@ Encoding: UTF-8
 Language: en-US
 LazyData: true
 RoxygenNote: 7.3.1
-NeedsCompilation: yes
-Packaged: 2024-10-03 13:23:51 UTC; jorge
+NeedsCompilation: no
+Packaged: 2025-04-23 20:41:22 UTC; jorge
 Author: Jorge Mestre-Tomás [aut, cre] (<https://orcid.org/0000-0002-8983-3417>)
 Maintainer: Jorge Mestre-Tomás <jorge.mestre.tomas@csic.es>
 Repository: CRAN
-Date/Publication: 2024-10-03 23:10:13 UTC
+Date/Publication: 2025-04-24 06:10:02 UTC
