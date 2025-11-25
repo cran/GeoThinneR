@@ -8,7 +8,7 @@
 #' @param original_data The original unmodified data.
 #' @param x An object of class \code{GeoThinned}.
 #' @param object An object of class \code{GeoThinned}.
-#' @param trial Integer index of the thinning trial to extract (for \code{get_trial()}, \code{plot()}, \code{as_sf()}). Default `NULL`, which will return the largest dataset.
+#' @param trial Integer index of the thinning trial to extract (for \code{summary()}, \code{get_trial()}, \code{plot()}, \code{as_sf()}). Default `NULL`, which will return the largest dataset.
 #' @param crs Coordinate reference system to assign to the resulting \code{sf} object (optional).
 #' @param show_original Logical, whether to show original points.
 #' @param col_original Colors for original points.
@@ -19,6 +19,7 @@
 #' @param ... Additional arguments (ignored).
 #'
 #' @return A \code{GeoThinned} object or associated results (summary, plot, trial subset).
+#' When `thin_points()` is run with `all_trials = FALSE`, the returned object contains only the largest trial; therefore all methods refer to this single subset.
 #' @seealso \code{\link{thin_points}}
 #' @rdname GeoThinned
 #' @export
@@ -46,7 +47,7 @@ new_GeoThinned <- function(retained, method, params = list(), original_data = NU
 print.GeoThinned <- function(x, ...) {
   cat("GeoThinned object\n")
   cat("Method used:", x$method, "\n")
-  cat("Number of trials:", length(x$retained), "\n")
+  cat("Number of trials:", x$params$trials, paste0("(", length(x$retained), " trials returned)\n"))
   cat("Points retained in largest trial:", sum(x$retained[[largest_index(x)]]), "\n")
   invisible(x)
 }
@@ -54,8 +55,15 @@ print.GeoThinned <- function(x, ...) {
 #' @method summary GeoThinned
 #' @rdname GeoThinned
 #' @export
-summary.GeoThinned <- function(object, ...) {
-  kept <- object$retained[[largest_index(object)]]
+summary.GeoThinned <- function(object, trial = NULL, ...) {
+  if (is.null(trial)) {
+    trial <- largest_index(object)
+  }
+  if (trial < 1 || trial > length(object$retained)) {
+    stop("Invalid trial index. 'trial' must be between 1 and ", length(object$retained), ".")
+  }
+
+  kept <- object$retained[[trial]]
   lon_col <- object$params$lon_col
   lat_col <- object$params$lat_col
   distance_type <- if (!is.null(object$params$distance)) {object$params$distance} else {"haversine"}
@@ -70,18 +78,27 @@ summary.GeoThinned <- function(object, ...) {
   nnd_orig <- compute_nearest_neighbor_distances(original_coords, distance = distance_type)
   nnd_thin <- compute_nearest_neighbor_distances(thinned_coords, distance = distance_type)
 
-  coverage_orig <- calculate_spatial_coverage(original_coords, distance = distance_type)
-  coverage_thin <- calculate_spatial_coverage(thinned_coords, distance = distance_type)
+  if (object$method %in% c("grid", "precision") && distance_type == "haversine") {
+    message("Note: Nearest neighbor distances and spatial coverage are computed using Haversine geometry by default.")
+  }
 
   if (n_thin < 3) {
     warning("Fewer than 3 points in thinned set. Spatial coverage may not be meaningful.")
   }
 
-  if (object$method %in% c("grid", "precision")) {
-    message("Note: Nearest neighbor distances and spatial coverage are computed using Haversine geometry by default.")
+  has_updated_s2 <- requireNamespace("s2", quietly = TRUE) && utils::packageVersion("s2") >= "1.1.0"
+
+  if (distance_type != "haversine" || has_updated_s2) {
+    coverage_orig <- calculate_spatial_coverage(original_coords, distance = distance_type)
+    coverage_thin <- calculate_spatial_coverage(thinned_coords, distance = distance_type)
+  } else {
+    message("Spatial coverage not computed for geographic coordinates: requires 's2' (>= 1.1.0). Please update the 's2' package.")
+    coverage_orig <- NA
+    coverage_thin <- NA
   }
 
   summary <- list(
+    trial = trial,
     method = object$method,
     distance_type = distance_type,
     n_points = list(original = n_orig, thinned = n_thin),
@@ -102,11 +119,12 @@ summary.GeoThinned <- function(object, ...) {
 #' @rdname GeoThinned
 #' @export
 print.summary.GeoThinned <- function(x, ...) {
-  nnd_units <- if (x$distance == "haversine") {"km"} else {"map units"}
-  area_units <- if (x$distance == "haversine") {"km2"} else {"map units2"}
+  nnd_units <- if (x$distance_type == "haversine") {"km"} else {"map units"}
+  area_units <- if (x$distance_type == "haversine") {"km2"} else {"map units2"}
 
   cat("Summary of GeoThinneR Results\n")
   cat("-----------------------------\n")
+  cat("Trial summarized  :", x$trial, "\n")
   cat("Method used       :", x$method, "\n")
   cat("Distance metric   :", x$distance_type, "\n\n")
 
@@ -146,7 +164,7 @@ plot.GeoThinned <- function(x, trial = NULL,
     trial <- largest_index(x)
   }
   if (trial < 1 || trial > length(x$retained)) {
-    stop("Invalid trial index.")
+    stop("Invalid trial index. 'trial' must be between 1 and ", length(x$retained), ".")
   }
 
   kept <- x$retained[[trial]]
@@ -167,11 +185,11 @@ plot.GeoThinned <- function(x, trial = NULL,
          xlab = "Longitude", ylab = "Latitude",
          main = main, ...)
     points(coords[kept, ], col = col_thinned, pch = pch_thinned)
-    legend("topright",
+    legend("topleft",
            legend = c("Removed", "Retained"),
            col = c(col_original, col_thinned),
            pch = c(pch_original, pch_thinned),
-           bty = "n")
+           bty = "o", bg="#faf5ef")
   } else {
     plot(coords[kept, ], col = col_thinned, pch = pch_thinned,
          xlab = "Longitude", ylab = "Latitude",

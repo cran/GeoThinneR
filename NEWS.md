@@ -1,4 +1,29 @@
-# GeoThinneR 2.0.0
+All notable changes to this project will be documented in this file.
+
+# GeoThinneR (development version)
+
+# GeoThinneR 2.1.0 - 24/11/2025
+
+## Added
+
+* Added `is_lonlat()` helper function to check for valid longitude/latitude ranges.
+* A warning is printed when coordinates lie outside the typical global longitude/latitude ranges.
+* `summary()` now allows to choose which trial to summarise using the `trial` argument.
+* Support for the `priority` parameter in the `"distance"` thinning method. When multiple candidate points have the same number of neighbors, the point with the lowest priority is removed (#1).
+* Support for `NA` values in the `priority` vector. These are treated as the lowest priority and trigger a warning.
+
+## Changed
+
+* The `"grid"` and `"precision"` methods now handle `priority` ties by randomly selecting among equally prioritized points.
+* Updated the vignette section on the `priority` parameter.
+* Added `s2 (>= 1.1.0)` to *Suggests* in the DESCRIPTION file.
+
+## Fixed
+
+* `print()` now reports both the number of trials run and returned (#3).
+* `summary()` no longer errors when `s2` is missing or too old. Now spatial coverage is set to `NA` with a message (#3).
+
+# GeoThinneR 2.0.0 - 24/04/2025
 
 **Breaking changes**. This version is backward-incompatible with earlier versions of GeoThinneR.
 
@@ -26,11 +51,11 @@
 * Improved documentation, error messages, and reproducibility behavior across all functions.
 * Updated the package vignette to reflect all changes.
 
-# GeoThinneR 1.1.0
+# GeoThinneR 1.1.0 - 03/10/2024
 
 * Removed non-CRAN dependency (`rtree`) and associated functions related to R-Trees structure thinning method (`r_tree_thinning()`).
 * Minor improvements to documentation.
 
-# GeoThinneR 1.0.0 
+# GeoThinneR 1.0.0 - 02/09/2024 
 
 * Initial release!

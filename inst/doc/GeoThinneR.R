@@ -299,6 +299,14 @@ ggplot() +
     )
 
 ## -----------------------------------------------------------------------------
+# Invert uncertainty to give more priority to lower uncertainty records
+priority <- -caretta$coordinateUncertaintyInMeters
+
+# For example, handle NAs by assigning lowest possible priority
+priority[is.na(priority)] <- min(priority, na.rm = TRUE) - 1
+
+## -----------------------------------------------------------------------------
+# Standard grid thinning (no priority)
 grid_thin <- thin_points(
   data = caretta,
   lon_col = "decimalLongitude",
@@ -308,8 +316,7 @@ grid_thin <- thin_points(
   seed = 123
 )
 
-# Substracting the maximum - the highest uncertainty becomes the lowest priority and vice versa.
-priority <- max(caretta$coordinateUncertaintyInMeters, na.rm = TRUE) - caretta$coordinateUncertaintyInMeters
+# Grid thinning with priority
 priority_thin <- thin_points(
   data = caretta,
   lon_col = "decimalLongitude",
@@ -321,7 +328,7 @@ priority_thin <- thin_points(
 )
 
 mean(largest(grid_thin)$coordinateUncertaintyInMeters, na.rm = TRUE)
-mean(largest(priority_thin )$coordinateUncertaintyInMeters, na.rm = TRUE)
+mean(largest(priority_thin)$coordinateUncertaintyInMeters, na.rm = TRUE)
 
 ## -----------------------------------------------------------------------------
 sessionInfo()
