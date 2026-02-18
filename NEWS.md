@@ -2,6 +2,16 @@ All notable changes to this project will be documented in this file.
 
 # GeoThinneR (development version)
 
+# GeoThinneR 2.1.1 - 17/02/2026
+
+## Changed
+
+* Clarified printed message and documentation for the optional spatial coverage metric when `s2` (>= 1.1.0) is not available.
+
+## Fixed
+
+* Fixed integer overflow warning with large datasets when using distance-based thinning with local kd-trees method. The issue was in the `split()` function used to assign points to grid cells. (#4)
+
 # GeoThinneR 2.1.0 - 24/11/2025
 
 ## Added
