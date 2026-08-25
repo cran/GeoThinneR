@@ -1,7 +1,7 @@
-c764a24d87335a335489023548159ff5 *DESCRIPTION
+e65393bddf84c86cd3938cb7008e511e *DESCRIPTION
 068fbdc3a0bc512b804fa52b41fab6d2 *LICENSE
 cbab3672e55b18eccd41ec59e6bfab2a *NAMESPACE
-1f2d7a5f19473c672c30f81f5b7af9fa *NEWS.md
+ff0e04554fa8d22bfa269fa23f5aa55e *NEWS.md
 ea2e69fc116b691be97a3443db6b1dc7 *R/GeoThinned_class.R
 57eb6288f06205f5342d6eee2fdd4758 *R/data.R
 ade53300c9cd58427f18600c50b7983b *R/distance_thinning.R
@@ -10,14 +10,14 @@ fe1ff09fb007239679a49130a8276aef *R/precision_thinning.R
 5e904a1f0d100bdd315b5e6497d28293 *R/thin_points.R
 f2268ab7f3efe0aa582272d1d5ff54b6 *R/thinning_algorithm.R
 54bb03dad953d43c3e9a8dcfae34713e *R/utils.R
-3287cb55f363158ccd3b4bb52fa10e87 *README.md
-706c1f3d2a3cdce62a888964cdca8278 *build/vignette.rds
+629abd64c1a33bfa0fb362c52ffad4dc *README.md
+9687eaca53ef8869abef373cd61bbbfa *build/vignette.rds
 b562c564f4009f26d138a5c852bc85f4 *data/caretta.rda
 1f74bc780187d6896f92a2d37eceb68e *data/thunnus.rda
-d376f4bfafd059d2c67ad532ecb4f98e *inst/CITATION
+29c51faf5b3e5f71644551f0b788a580 *inst/CITATION
 4ba2b673f628a3c4da4290a6339496a9 *inst/doc/GeoThinneR.R
-5a37c0ed01e846f0bbb110a6426d15c1 *inst/doc/GeoThinneR.Rmd
-858a295d1145c8f2634f3101c58a014e *inst/doc/GeoThinneR.html
+0f302e96d11ecbb1423895642a2bed33 *inst/doc/GeoThinneR.Rmd
+6a5f302e8387bd15bf567772d9fc78d1 *inst/doc/GeoThinneR.html
 42ad8f33d446981406ca3bd4bd860577 *inst/extdata/mediterranean_sea.gpkg
 4d71fb8ed309f6cd676d76ac1c2f77de *man/GeoThinned.Rd
 e9696f31ae5b4e2573fe156d57c636c7 *man/calculate_spatial_coverage.Rd
@@ -46,4 +46,4 @@ fb938f028c17fefdad54200feb005d2f *tests/testthat/test-grid_thinning.R
 adac077786af7f51c4c3d50d39022a56 *tests/testthat/test-thin_points.R
 0cd167bb46964f3d15661ff08f4c4901 *tests/testthat/test-thinning_algorithm.R
 f9d28b4372d68e41cf2664397e82baa1 *tests/testthat/test-utils.R
-5a37c0ed01e846f0bbb110a6426d15c1 *vignettes/GeoThinneR.Rmd
+0f302e96d11ecbb1423895642a2bed33 *vignettes/GeoThinneR.Rmd
