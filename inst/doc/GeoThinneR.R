@@ -127,6 +127,29 @@ dist_thin <- thin_points(sim_data, method = "distance", thin_dist = 25, trials =
 plot(dist_thin)
 
 ## -----------------------------------------------------------------------------
+duplicate_data <- data.frame(
+  lon = c(-3, -3, -3, 0),
+  lat = c(40, 40, 40, 43),
+  record = c("A", "B", "C", "D")
+)
+
+# Recommended and default behavior
+duplicates_collapsed <- thin_points(
+  duplicate_data, method = "distance", thin_dist = 10,
+  search_type = "brute", trials = 1,
+  duplicates = "remove", seed = 123
+)
+largest(duplicates_collapsed)
+
+# Previous behavior, processing every row during neighbor searches
+duplicates_kept <- thin_points(
+  duplicate_data, method = "distance", thin_dist = 10,
+  search_type = "brute", trials = 1,
+  duplicates = "keep", seed = 123
+)
+largest(duplicates_kept)
+
+## -----------------------------------------------------------------------------
 brute_thin <- thin_points(
   data = sim_data,
   method = "distance",

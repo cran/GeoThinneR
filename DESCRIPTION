@@ -1,7 +1,7 @@
 Type: Package
 Package: GeoThinneR
 Title: Efficient Spatial Thinning of Species Occurrences
-Version: 2.1.2
+Version: 2.1.3
 Authors@R: 
     person("Jorge", "Mestre-Tomás", , "jorge.mestre.tomas@csic.es", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-8983-3417"))
@@ -26,11 +26,11 @@ Config/testthat/edition: 3
 Encoding: UTF-8
 Language: en-US
 LazyData: true
-RoxygenNote: 7.3.3
+Config/roxygen2/version: 8.1.0
 NeedsCompilation: no
-Packaged: 2026-08-25 17:20:26 UTC; jorge
+Packaged: 2026-10-12 07:02:23 UTC; Maria
 Author: Jorge Mestre-Tomás [aut, cre] (ORCID:
     <https://orcid.org/0000-0002-8983-3417>)
 Maintainer: Jorge Mestre-Tomás <jorge.mestre.tomas@csic.es>
 Repository: CRAN
-Date/Publication: 2026-08-25 22:00:14 UTC
+Date/Publication: 2026-10-12 07:50:12 UTC
